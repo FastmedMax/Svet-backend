@@ -33,3 +33,19 @@ class CourseDetailView(APIView):
         serializer = self.srializer_class(course)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
+
+class CourseListView(ListAPIView):
+    """Find list courses with or without filter"""
+    queryset = Course
+    serializer_class = CuorseSerializer
+
+    def get(self, request, *args, **kwargs):
+        try:
+            if request.GET.get("categories"):
+                courses = self.queryset.objects.filter(category__in=request.GET["categories"])
+            else:
+                courses = self.queryset.objects.all()
+        except Course.DoesNotExist:
+            return Response("Курсы не найдены!", status=status.HTTP_404_NOT_FOUND)
+        serializer = self.serializer_class(courses, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
