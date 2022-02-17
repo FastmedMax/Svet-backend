@@ -24,3 +24,28 @@ class Lecturer(models.Model):
     class Meta:
         verbose_name = "Лектор"
         verbose_name_plural = "Лекторы"
+
+
+class Course(models.Model):
+    picture = models.ImageField(verbose_name="Картинка курса", blank=True)
+    title = models.CharField(verbose_name="Название курса", max_length=60)
+    description = models.TextField(verbose_name="описание")
+    category = models.ForeignKey(
+        Category,
+        verbose_name="Категория курса",
+        blank=True,
+        on_delete=models.CASCADE,
+        related_name="courses"
+        )
+    lecturer = models.ForeignKey(
+        Lecturer,
+        verbose_name="Лектор курса",
+        blank=True,
+        on_delete=models.CASCADE,
+        related_name="courses"
+        )
+    price = models.FloatField(verbose_name="Цена")
+
+    class Meta:
+        verbose_name = "Курс"
+        verbose_name_plural = "Курсы"
