@@ -12,6 +12,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Third party apps
     "rest_framework",
+    "rest_framework.authtoken",
+    "djoser",
     # Local apps
     "api",
 ]
@@ -47,6 +49,8 @@ DATABASES = {
     }
 }
 
+AUTH_USER_MODEL = "api.User"
+
 # General
 TIME_ZONE = "Europe/Moscow"
 LANGUAGE_CODE = "ru"
@@ -54,6 +58,23 @@ LANGUAGE_CODE = "ru"
 # to load the internationalization machinery.
 USE_I18N = True
 USE_TZ = True
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.TokenAuthentication",
+    ),
+}
+
+DJOSER = {
+    "USER_CREATE_PASSWORD_RETYPE": True,
+    "LOGIN_FIELD": "email",
+    "SERIALIZERS": {
+        "user": "api.serializers.UserSerializer",
+        "current_user": "api.serializers.UserSerializer",
+        "user_create": "api.serializers.CreateUserSerializer",
+        "user_create_password_retype": "api.serializers.CreateUserSerializer",
+    },
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
