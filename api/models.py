@@ -56,7 +56,7 @@ class User(AbstractUser):
     
     first_name = models.CharField(verbose_name="Имя", max_length=60)
     last_name = models.CharField(verbose_name="Фамилия", max_length=60)
-    middle_name = models.CharField(verbose_name="Отчество", max_length=60, blank=60)
+    middle_name = models.CharField(verbose_name="Отчество", max_length=60, blank=True)
     picture = models.ImageField(verbose_name="Изображение", blank=True)
     phone_number = models.CharField(verbose_name="Номер телефона", max_length=15)
     courses = models.ManyToManyField(
