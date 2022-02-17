@@ -77,3 +77,14 @@ class User(AbstractUser):
     REQUIRED_FIELDS = ()
 
     objects = UserManager()
+
+
+class UserCourses(models.Model):
+    user = models.ForeignKey(User, verbose_name="Пользователь", on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, verbose_name="Курс", on_delete=models.CASCADE)
+    is_purchase = models.BooleanField(verbose_name="Приобретённый?", default=False)
+    is_favourite = models.BooleanField(verbose_name="Избранный?", default=False)
+
+    class Meta:
+        verbose_name = "Курс пользователя"
+        verbose_name_plural = "Курсы пользователя"
