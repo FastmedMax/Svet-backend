@@ -49,3 +49,31 @@ class Course(models.Model):
     class Meta:
         verbose_name = "Курс"
         verbose_name_plural = "Курсы"
+
+
+class User(AbstractUser):
+    username = None
+    
+    first_name = models.CharField(verbose_name="Имя", max_length=60)
+    last_name = models.CharField(verbose_name="Фамилия", max_length=60)
+    middle_name = models.CharField(verbose_name="Отчество", max_length=60, blank=60)
+    picture = models.ImageField(verbose_name="Изображение", blank=True)
+    phone_number = models.CharField(verbose_name="Номер телефона", max_length=15)
+    courses = models.ManyToManyField(
+        Course,
+        verbose_name="Приобретённые курсы",
+        blank=True,
+        through="UserCourses"
+        )
+    email = models.EmailField(
+        verbose_name="Почта",
+        unique=True,
+        validators=[validators.validate_email],
+        error_messages={
+            "unique": "Пользователь с таким email уже существует.",
+        },)
+
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ()
+
+    objects = UserManager()
