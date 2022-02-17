@@ -30,3 +30,9 @@ class CourseDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = "__all__"
+
+
+class CuorseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Course
+        fields = ("id", "picture", "title")
