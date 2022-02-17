@@ -18,3 +18,18 @@ class CategoryListView(ListAPIView):
             return Response("Категории не найдены!", status=status.HTTP_404_NOT_FOUND)
         serializer = self.serializer_class(categories, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class CourseDetailView(APIView):
+    """Find selected course for id and full info"""
+    queryset = Course
+    srializer_class = CourseDetailSerializer
+
+    def get(self, request, id):
+        try:
+            course = self.queryset.objects.get(id=id)
+        except Course.DoesNotExist:
+            return Response("Курс не найден!", status=status.HTTP_404_NOT_FOUND)
+        serializer = self.srializer_class(course)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
