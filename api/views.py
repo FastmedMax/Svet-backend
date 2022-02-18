@@ -1,7 +1,8 @@
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import status
 from rest_framework.generics import ListAPIView
+from rest_framework.permissions import AllowAny
 
 from .models import Category, Course
 from .serializers import CategorySerializer, CourseDetailSerializer, CuorseSerializer
@@ -10,6 +11,7 @@ from .serializers import CategorySerializer, CourseDetailSerializer, CuorseSeria
 class CategoryListView(ListAPIView):
     queryset = Category
     serializer_class = CategorySerializer
+    permission_classes = (AllowAny,)
 
     def get(self, request):
         try:
@@ -24,6 +26,7 @@ class CourseDetailView(APIView):
     """Find selected course for id and full info"""
     queryset = Course
     srializer_class = CourseDetailSerializer
+    permission_classes = (AllowAny,)
 
     def get(self, request, id):
         try:
@@ -38,6 +41,7 @@ class CourseListView(ListAPIView):
     """Find list courses with or without filter"""
     queryset = Course
     serializer_class = CuorseSerializer
+    permission_classes = (AllowAny,)
 
     def get(self, request, *args, **kwargs):
         try:
